@@ -40,34 +40,54 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbf = FirebaseDatabase.getInstance("https://newproj-83d5f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Information");
+        dbf = FirebaseDatabase.getInstance("https://newproj-83d5f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Names");
 
         mUserList = (ListView) findViewById(R.id.user_list);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,user_name);
         mUserList.setAdapter(arrayAdapter);
-        dbf.addChildEventListener(new ChildEventListener() {
+//        dbf.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+////                Information info = snapshot.getValue(Information.class);
+////                String names = info.getName() + ": " + info.getEmail() ;
+//                String val = snapshot.getValue(String.class);
+//                user_name.add(val);
+//                arrayAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
+        dbf.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Information info = snapshot.getValue(Information.class);
-                String names = info.getName() + ": " + info.getEmail() ;
-                user_name.add(names);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                user_name.clear();
+                for(DataSnapshot snapshot1 : snapshot.getChildren())
+                {
+//                    Information info = snapshot1.getValue(Information.class);
+//                    String nam = info.getName() + ": " + info.getEmail() ;
+                    user_name.add(snapshot1.getValue().toString());
+                }
                 arrayAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
 
             @Override
@@ -75,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
 
 
