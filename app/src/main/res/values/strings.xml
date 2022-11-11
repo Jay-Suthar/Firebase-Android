@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">jay the  great</string>
+    <string name="textview">TextView</string>
+    <string name="logout">Logout</string>
 </resources>

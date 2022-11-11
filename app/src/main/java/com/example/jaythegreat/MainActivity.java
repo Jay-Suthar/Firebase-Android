@@ -32,20 +32,54 @@ public class MainActivity extends AppCompatActivity {
 //    private EditText name;
 //    private EditText email;
 //    private TextView disname;
-    private ListView mUserList;
-    private ArrayList<String> user_name = new ArrayList<>();
+//    private ListView mUserList;
+//    private ArrayList<String> user_name = new ArrayList<>();
+
+
+
+    //auth part
+    private Button login;
+    private Button register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbf = FirebaseDatabase.getInstance("https://newproj-83d5f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Names");
 
-        mUserList = (ListView) findViewById(R.id.user_list);
+        login = (Button) findViewById(R.id.Login_btn);
+        register = (Button) findViewById(R.id.Rrgister_btn);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,user_name);
-        mUserList.setAdapter(arrayAdapter);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+                finish();
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                finish();
+            }
+        });
+
+
+
+
+
+
+
+
+
+//        dbf = FirebaseDatabase.getInstance("https://newproj-83d5f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Names");
+//
+//        mUserList = (ListView) findViewById(R.id.user_list);
+//
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,user_name);
+//        mUserList.setAdapter(arrayAdapter);
 //        dbf.addChildEventListener(new ChildEventListener() {
 //            @Override
 //            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -77,24 +111,24 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        dbf.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                user_name.clear();
-                for(DataSnapshot snapshot1 : snapshot.getChildren())
-                {
-//                    Information info = snapshot1.getValue(Information.class);
-//                    String nam = info.getName() + ": " + info.getEmail() ;
-                    user_name.add(snapshot1.getValue().toString());
-                }
-                arrayAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        dbf.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                user_name.clear();
+//                for(DataSnapshot snapshot1 : snapshot.getChildren())
+//                {
+////                    Information info = snapshot1.getValue(Information.class);
+////                    String nam = info.getName() + ": " + info.getEmail() ;
+//                    user_name.add(snapshot1.getValue().toString());
+//                }
+//                arrayAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
 
 
